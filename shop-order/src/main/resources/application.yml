@@ -1,0 +1,33 @@
+server:
+  port: 8091
+  tomcat:
+    max-threads: 10
+spring:
+  application:
+    name: service-order
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #sentinel 控制台的地址
+        port: 9999  #sentinel和项目的交互端口，随便填，没人用、不重复的端口就行
+      eager: true #取消sentinel懒加载
+#设置下列名称的服务提供者的负载均衡策略 RandomRule为随机，默认时轮询
+service-product:  #服务提供者的名称
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+
+
